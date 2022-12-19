@@ -80,11 +80,7 @@
                 url: 'Home/sendMessage',
                 data: { fvalue: value1, svalue: value2, operation: op },
                 success: function () {
-                    $.ajax({
-                        url: 'Home/readMessages',
-                        data: { fvalue: value1, svalue: value2, operation: op },
-                        success: function () {
-                             $.ajax({
+                      $.ajax({
                         url: 'Home/LoadPartial',
                         data: { fvalue: value1, svalue: value2, operation: op },
                         success: function (result) {
@@ -93,11 +89,12 @@
                         },
                         error: function (e) { alert(e);}
                     });
+                    $.ajax({
+                        url: 'Home/readMessages',
+                        data: { fvalue: value1, svalue: value2, operation: op },
+                        success: function () {                           
                         }
-                    });
-                   
-                    
-
+                    });                   
                 },
                 error: function (e) {
                 }
