@@ -81,20 +81,22 @@
                 data: { fvalue: value1, svalue: value2, operation: op },
                 success: function () {
                     $.ajax({
+                        url: 'Home/readMessages',
+                        data: { fvalue: value1, svalue: value2, operation: op },
+                        success: function () {
+                             $.ajax({
                         url: 'Home/LoadPartial',
                         data: { fvalue: value1, svalue: value2, operation: op },
                         success: function (result) {
                             $('#asyncOutput').html(result);
                             $("#asyncOutput").show();
                         },
-                        error: function (e) { }
+                        error: function (e) { alert(e);}
                     });
-                    $.ajax({
-                        url: 'Home/readMessages',
-                        data: { fvalue: value1, svalue: value2, operation: op },
-                        success: function () {
                         }
                     });
+                   
+                    
 
                 },
                 error: function (e) {
