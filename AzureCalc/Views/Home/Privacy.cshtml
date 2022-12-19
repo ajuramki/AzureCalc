@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Calculator>
+
+<h4>CalcOutput</h4>
+<hr />
+<div class="row">
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <th>First_Value</th>
+            <th>Second_Value</th>
+            <th>Operator</th>
+            <th>Calculated_Value</th>
+        </tr>
+        @foreach (Calculator calculator in Model)
+        {
+            <tr>
+                <td>@calculator.FirstValue</td>
+                <td>@calculator.SecondValue </td>
+                <td>@calculator.Operator</td>
+                <td>@calculator.Total </td>
+            </tr>
+        }
+    </table>
+</div>
+

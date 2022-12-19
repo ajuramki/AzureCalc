@@ -1,0 +1,115 @@
+﻿@{
+    ViewData["Title"] = "Calculator";
+}
+@*@Html.AntiForgeryToken()*@
+@model Calculator
+<div class="row">
+    <div class="col-sm-4">
+        <label class="form-label"> Enter number 1 :</label>
+    </div>
+    <div class="col-sm-8">
+        <input type="text" id="txtNumber1" onkeydown="return ValidateNumber(event);" name="Number1" runat="server" />
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-sm-4"><label class="form-label"> Enter number 2 :</label></div>
+    <div class="col-sm-8"><input type="text" id="txtNumber2" onkeydown="return ValidateNumber(event);" name="Number2" runat="server" /></div>
+</div>
+<br />
+<div class="row">
+    <div class="col-sm-4">
+        <label class="form-label"> Choose operator :</label>
+    </div>
+    <div class="col-sm-8">
+        <select title="selectop" class="form-select" style="width:250px" id="ddlOperator" name="operator">
+            <option value="0">Select operator</option>
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+    </div>
+</div>
+
+<div class="row">
+    <div><input type="button" onclick="calculate()" title="Calculate" value="Calculate" /></div>
+</div>
+<br />
+<div>
+    <div id="asyncOutput" style="display:none">
+        @Html.Partial("CalcDetails")
+        @* @{
+        Html.RenderPartial("CalcDetails", Model);
+        }*@
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-2">
+        @ViewBag.QueueReadMessage
+        @if (@ViewBag.QueueReadMessage != null)
+        {
+            <script type="text/javascript">
+                alert('@ViewBag.QueueReadMessage');;
+            </script>
+        }
+    </div>
+</div>
+<div class="row">
+    @Html.ActionLink("Click here to see all previous calculations","Privacy")
+
+</div>
+
+
+
+<script type="text/javascript">
+    function calculate() {
+        var value1 = $('#txtNumber1').val();
+        var value2 = $('#txtNumber2').val();
+        var e = document.getElementById("ddlOperator");
+        var op = e.value;
+        var total;
+        if (op == "0") {
+            alert('Please select an operator');
+            return true;
+        }
+        else {
+            var val1 = Number(value1);
+            var val2 = Number(value2);
+            $.ajax({
+                url: 'Home/sendMessage',
+                data: { fvalue: value1, svalue: value2, operation: op },
+                success: function () {
+                    $.ajax({
+                        url: 'Home/LoadPartial',
+                        data: { fvalue: value1, svalue: value2, operation: op },
+                        success: function (result) {
+                            $('#asyncOutput').html(result);
+                            $("#asyncOutput").show();
+                        },
+                        error: function (e) { }
+                    });
+                    $.ajax({
+                        url: 'Home/readMessages',
+                        data: { fvalue: value1, svalue: value2, operation: op },
+                        success: function () {
+                        }
+                    });
+
+                },
+                error: function (e) {
+                }
+            });
+        }
+
+    };
+
+    function ValidateNumber(e) {
+        var evt = (e) ? e : window.event;
+        var charCode = (evt.keyCode) ? evt.keyCode : evt.which;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    };
+</script>

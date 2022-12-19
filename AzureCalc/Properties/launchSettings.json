@@ -1,0 +1,29 @@
+{
+  "profiles": {
+    "AzureCalc": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AZURE_TENANT_ID": "d76049cd-80bb-4a90-b48b-5b362000a2c3"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7233;http://localhost:5100"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:31593",
+      "sslPort": 44303
+    }
+  }
+}
